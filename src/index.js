@@ -1,5 +1,5 @@
-import _ from 'lodash';
-import AWS from 'aws-sdk';
+const _ = require('lodash');
+const AWS = require('aws-sdk');
 
 const createErrorFormat = (errorMessage, errorCode) => {
     var jsonData = {};
@@ -8,27 +8,27 @@ const createErrorFormat = (errorMessage, errorCode) => {
     return jsonData;
 };
 
-const done = (err, res) => callback(null, {
-    "body" : err ? err.message : res.body,
-    "statusCode" : err ? err.status : res.status,
-    "headers" : {
-        'Content-Type' : 'application/json',
-        'Accept' : 'application/json',
-        'X-Requested-With' : '*',
-        'Access-Control-Allow-Origin' : '*',
-        'Access-Control-Allow-Methods' : 'GET,POST,OPTIONS',
-        'Access-Control-Allow-Headers' : 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,x-requested-with'
-    }
-});
-
 let dynamodb;
 
-export function handler(event, context, callback) {
+export default function handler(event, context, callback) {
+    console.log(" Request to lambda: " + JSON.stringify(event));
+    const done = (err, res) => callback(null, {
+        "body" : err ? err.message : res.body,
+        "statusCode" : err ? err.status : res.status,
+        "headers" : {
+            'Content-Type' : 'application/json',
+            'Accept' : 'application/json',
+            'X-Requested-With' : '*',
+            'Access-Control-Allow-Origin' : '*',
+            'Access-Control-Allow-Methods' : 'GET,POST,OPTIONS',
+            'Access-Control-Allow-Headers' : 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,x-requested-with'
+        }
+    });
     if (dynamodb === undefined) {
         console.log("DB connection created for region " +  process.env.AWS_DEFAULT_REGION);
         dynamodb = new AWS.DynamoDB.DocumentClient();
     }
-    executeRequest(event, done)
+    executeRequest(event, done);
 }
 
 async function executeRequest(event, done) {
