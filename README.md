@@ -3,3 +3,4 @@
 
 ## Build
 - Use this command to build `npm install`
+- Use this command to create deployment package `zip -r cma-customer-profile-api.zip *`
