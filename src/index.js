@@ -10,7 +10,7 @@ const createErrorFormat = (errorMessage, errorCode) => {
 
 let dynamodb;
 
-export default function handler(event, context, callback) {
+exports.handler = (event, context, callback) => {
     console.log(" Request to lambda: " + JSON.stringify(event));
     const done = (err, res) => callback(null, {
         "body" : err ? err.message : res.body,
@@ -32,7 +32,7 @@ export default function handler(event, context, callback) {
 }
 
 async function executeRequest(event, done) {
-    switch (event.method) {
+    switch (event.httpMethod) {
         case 'POST' :
             try {
                 persistUserProfileData(event, done);

@@ -1,12 +1,13 @@
 {
-  "name": "@cma/cma-customer-profile-api",
+  "name": "@clo/clo-customer-profile-api",
   "version": "1.0.0",
   "description": "This api pull up the profile of cma customer",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "createbuild": "npm install && zip -r clo-customer-profile-api.zip src/ node_modules/"
   },
-  "author": "cma",
+  "author": "clo",
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.2.29",
